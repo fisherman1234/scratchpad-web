@@ -1,0 +1,15 @@
+html, body, #scratchpad-app, #list, #editor{
+  height: 100%;
+}
+
+#list {
+  background-color: red;
+  position: absolute;
+  width: 25%;
+}
+
+#editor{
+  position: absolute;
+  width: 75%;
+  margin-left: 25%;
+}
