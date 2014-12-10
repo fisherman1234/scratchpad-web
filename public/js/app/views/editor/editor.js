@@ -42,6 +42,7 @@ define([
         var aceLang = this.model.get('aceLang');
         if (aceLang) {
           this.aceEditor.getSession().setMode(aceLang);
+          this.$(".language-select").val(this.model.get('highlightLang'));
         }
       } else {
         this.model = this.notes._prepareModel();
