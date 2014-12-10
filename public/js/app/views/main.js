@@ -22,15 +22,22 @@ define([
       this.options.parent = this;
       var self = this;
 
-      this.notes.fetch().done(function(){
-        self.doRender();
-      });
+      if (!this.rendered){
+        this.notes.fetch().done(function () {
+          self.doRender();
+        });
+      } else {
+        this.editor.render(this.options);
+      }
+
       return this;
     },
     doRender: function(){
+      this.notes.sort();
       this.$el.html(mainTemplate);
       this.list.setElement(this.$("#list")).render(this.options);
       this.editor.setElement(this.$("#editor")).render(this.options);
+      this.rendered = true;
     }
 
   });

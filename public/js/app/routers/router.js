@@ -18,11 +18,24 @@ define([
       },
 
       routes: {
-        "": "index"
+        "": "index",
+        "loading": "loading",
+        "notes/:noteId": "noteId"
       },
+      loading: function(){
 
+      },
+      mainView: function(){
+        if (!this._mainView){
+          this._mainView = new MainView();
+        }
+        return this._mainView;
+      },
       index: function () {
-        new MainView().render();
+        this.mainView().render();
+      },
+      noteId: function(noteId) {
+        this.mainView().render({noteId: noteId})
       }
 
     });

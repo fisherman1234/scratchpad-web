@@ -20,33 +20,57 @@ define([
 
       this.aceEditor = ace.edit(this.$("#edit-content")[0]);
       this.aceEditor.setTheme("ace/theme/xcode");
+
+      window.test = this;
+
+      if (!this.options.noteId){
+        this.model = this.notes._prepareModel();
+        this.notes.add(this.model);
+      } else {
+        var fetched = this.notes.get(this.options.noteId);
+        if (fetched){
+          this.model = fetched;
+          var aceLang = this.model.get('aceLang');
+          if (aceLang){
+            this.aceEditor.getSession().setMode(aceLang);
+          }
+        } else {
+          this.model = this.notes._prepareModel();
+          this.notes.add(this.model);
+        }
+      }
+
+      var noteTime = this.model.get("updated_at") ? moment(this.model.get("updated_at")) : moment();
+      this.$(".timestamp").text(noteTime.format('lll'));
+
+      this.aceEditor.setValue(this.model.get("value"), -1);
+
       this.aceEditor.getSession().on('change', function (e) {
         self.onChange(e);
       });
 
-      if (!this.options.id){
-        this.model = this.notes._prepareModel();
-      } else {
-        var fetched = this.notes.get(this.options.id);
-        if (fetched){
-          this.model = fetched;
-        } else {
-          this.model = this.notes._prepareModel();
-        }
-      }
+
       return this;
+    },
+    events: {
+      'click .add-note': 'addNote'
+    },
+    addNote: function(){
+      Backbone.history.navigate('/loading', true); // to force a refresh of the top url
+      Backbone.history.navigate('/notes/new', true);
     },
     onChange: _.debounce(function(event){
       var value = this.aceEditor.getValue();
-      this.model.save({value: value, updated_at: moment().toJSON()});
-      console.log(hljs.highlightAuto(value));
 
       var detectedLang = hljs.highlightAuto(value).language;
       var aceLang = this.languageMapping[detectedLang];
       if (aceLang){
+        console.log('detected lang', aceLang);
         this.aceEditor.getSession().setMode(aceLang);
-        console.log('will set lang to', aceLang);
       }
+
+      this.model.save({value: value, updated_at: moment().toJSON(), aceLang: aceLang, highlightLang: detectedLang});
+
 
     }, 300),
     languageMapping: {
@@ -72,6 +96,39 @@ define([
       'python': 'ace/mode/python',
       'ruby': 'ace/mode/ruby',
       'sql': 'ace/mode/sql'
+    },
+    postGistToGithub: function(){
+      var value = this.aceEditor.getValue();
+      var self = this;
+
+      if (!value || value.length === 0) {
+        return;
+      }
+
+      var data = {
+        "description": this.model.get('id'),
+        "public": false,
+        "files": {
+          "content": {
+            "content": value
+          }
+        }
+      };
+
+
+
+      $.ajax({
+        url: 'https://api.github.com/gists',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data)
+      })
+        .success(function (e) {
+          self.model.save({gistId: e.id});
+        })
+        .error(function (e) {
+          console.warn("gist save error", e);
+        });
     }
 
   });
