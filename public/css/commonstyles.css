@@ -15,7 +15,6 @@ html, body, #scratchpad-app, #list, #editor{
 }
 
 #editor .toolbar{
-  overflow: hidden;
   position: absolute;
   top: 0;
   background-color: yellow;
@@ -35,7 +34,7 @@ html, body, #scratchpad-app, #list, #editor{
   list-style-type: none;
   padding: 0;
   overflow: scroll;
-  height: 100%;
+  height: calc(100% - 35px);
 }
 
 .snippet-list-item{
@@ -57,4 +56,48 @@ html, body, #scratchpad-app, #list, #editor{
   font-size: 11px;
   margin-top: 2px;
   margin-left: 5px;
+}
+
+#list .search-area{
+  margin-bottom: 0;
+}
+
+#list .search-area #search-query{
+  border-radius: 0;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+.add-note{
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.toolbar .language-select{
+  display: inline-block;
+  width: auto;
+  height: 30px;
+}
+
+.toolbar .action-menu{
+  display: inline-block;
+}
+
+.toolbar .btn{
+  border-radius: 5px;
+}
+
+.toolbar .right-group{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#editor .timestamp{
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
 }

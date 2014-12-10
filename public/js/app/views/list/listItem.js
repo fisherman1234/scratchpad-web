@@ -20,7 +20,11 @@ define([
       this.$el.html(listItemTemplate);
       var $preview = this.$(".preview");
       $preview.html(note.get('value'));
-      hljs.highlightBlock($preview[0]);
+
+      if (note.get("highlightLang") && note.get("highlightLang") !== "text"){
+        hljs.highlightBlock($preview[0]);
+      }
+
       this.$(".timestamp").html(moment(note.get("updated_at")).format("lll"));
       return this;
     },

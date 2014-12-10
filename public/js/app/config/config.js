@@ -28,6 +28,7 @@ require.config({
     "backbone.validateAll": "../libs/plugins/Backbone.validateAll",
     "bootstrap": "../libs/plugins/bootstrap",
     "highlightjs": "../libs/highlightjs/highlight.pack",
+    "lz-string": "../libs/lz-string",
     "localstorage": "../libs/plugins/Backbone.localStorage",
     "moment": "../libs/plugins/moment",
     "text": "../libs/plugins/text",

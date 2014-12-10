@@ -62,10 +62,11 @@
     this.name = name;
     this.serializer = serializer || {
       serialize: function (item) {
-        return isObject(item) ? JSON.stringify(item) : item;
+        return isObject(item) ? LZString.compress(JSON.stringify(item)) : LZString.compress(item);
       },
       // fix for "illegal access" error on Android when JSON.parse is passed null
       deserialize: function (data) {
+        data = LZString.decompress(data);
         return data && JSON.parse(data);
       }
     };
