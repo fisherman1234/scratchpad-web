@@ -27,6 +27,7 @@ require.config({
     "ace": "../libs/ace/src-noconflict/ace",
     "backbone.validateAll": "../libs/plugins/Backbone.validateAll",
     "bootstrap": "../libs/plugins/bootstrap",
+    "highlightjs": "../libs/highlightjs/highlight.pack",
     "localstorage": "../libs/plugins/Backbone.localStorage",
     "moment": "../libs/plugins/moment",
     "text": "../libs/plugins/text",

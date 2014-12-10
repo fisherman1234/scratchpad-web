@@ -8,10 +8,16 @@ define([
 
   return BaseView.extend({
     initialize: function (args) {
+
     },
 
-    render: function () {
+    render: function (options) {
+      this.options = options;
+
       this.$el.html(listTemplate);
+      this.options.parent.notes.each(function(note){
+        console.log(note);
+      });
       return this;
     }
 
