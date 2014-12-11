@@ -58,6 +58,9 @@ define([
 
       // set editor value.
       this.aceEditor.setValue(this.model.get("value"), -1);
+      this.aceEditor.getSession().setUseWrapMode(true);
+      this.aceEditor.getSession().setWrapLimitRange(100, 120);
+      this.aceEditor.setOption('printMarginColumn', 121);
 
 
       return this;
