@@ -3,13 +3,15 @@ define([
   'underscore',
   'moment',
   'highlightjs',
+  'firebase',
   'shared/views/base',
   'text!./editor.html'
 
-], function ($, _, moment, highlightjs, BaseView, editorTemplate) {
+], function ($, _, moment, highlightjs, firebase , BaseView, editorTemplate) {
 
   return BaseView.extend({
     initialize: function (args) {
+
     },
 
     render: function (options) {
@@ -52,6 +54,7 @@ define([
       // set header time.
       var noteTime = this.model.get("updated_at") ? moment(this.model.get("updated_at")) : moment();
       this.$(".timestamp").text(noteTime.format('lll'));
+      this.setGistUrl();
 
       // set editor value.
       this.aceEditor.setValue(this.model.get("value"), -1);
@@ -61,7 +64,10 @@ define([
     },
     events: {
       'click .add-note': 'addNote',
-      'change .language-select': 'onLanguageSelectChanged'
+      'change .language-select': 'onLanguageSelectChanged',
+      'click .create-gist': 'createGist',
+      'click .share-link': 'shareNote',
+      'click .share-dropdown-menu li': 'doNotClose'
     },
     onLanguageSelectChanged: function(){
       var lang = this.$(".language-select").val();
@@ -122,38 +128,31 @@ define([
       'sql': 'ace/mode/sql',
       'text': 'ace/mode/plain_text'
     },
-    postGistToGithub: function(){
-      var value = this.aceEditor.getValue();
+    createGist: function(){
       var self = this;
+      this.model.postGistToGithub().done(function(result){
+        self.setGistUrl();
+      });
+    },
+    setGistUrl: function(){
+      var url = "https://gist.github.com/" + this.model.get("gistId");
+      this.$(".gist-url").val(url);
+    },
+    shareNote: function(){
+      var self = this;
+      this.model.saveToFirebase().done(function(result){
+        self.setShareUrl();
+      });
+    },
+    setShareUrl: function(){
+      var url = window.location.origin + "/#saved/" + this.model.get("fireBaseId");
+      this.$(".share-url").val(url);
+      this.$(".share-password").val(this.model.get('fireBasePass'));
 
-      if (!value || value.length === 0) {
-        return;
-      }
-
-      var data = {
-        "description": this.model.get('id'),
-        "public": false,
-        "files": {
-          "content": {
-            "content": value
-          }
-        }
-      };
-
-
-
-      $.ajax({
-        url: 'https://api.github.com/gists',
-        type: 'POST',
-        dataType: 'json',
-        data: JSON.stringify(data)
-      })
-        .success(function (e) {
-          self.model.save({gistId: e.id});
-        })
-        .error(function (e) {
-          console.warn("gist save error", e);
-        });
+    },
+    doNotClose: function(e){
+      e.preventDefault();
+      e.stopPropagation();
     }
 
   });

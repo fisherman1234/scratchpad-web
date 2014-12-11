@@ -5,15 +5,17 @@ define([
   'collections/notes',
   'views/list/list',
   'views/editor/editor',
+  'views/password',
   'text!./main.html'
 
-], function ($, _, BaseView, NoteCollection, ListView, EditorView, mainTemplate) {
+], function ($, _, BaseView, NoteCollection, ListView, EditorView, PasswordView, mainTemplate) {
 
   return BaseView.extend({
     initialize: function (args) {
       this.list = new ListView();
       this.editor = new EditorView();
       this.notes = new NoteCollection();
+      this.password = new PasswordView();
     },
     el: "#scratchpad-app",
 
@@ -27,7 +29,7 @@ define([
           self.doRender();
         });
       } else {
-        this.editor.render(this.options);
+        this.renderRight();
       }
 
       return this;
@@ -36,8 +38,16 @@ define([
       this.notes.sort();
       this.$el.html(mainTemplate);
       this.list.setElement(this.$("#list")).render(this.options);
-      this.editor.setElement(this.$("#editor")).render(this.options);
+
+      this.renderRight();
       this.rendered = true;
+    },
+    renderRight: function(){
+      if (this.options.firebaseId) {
+        this.password.setElement(this.$("#editor")).render(this.options);
+      } else {
+        this.editor.setElement(this.$("#editor")).render(this.options);
+      }
     }
 
   });

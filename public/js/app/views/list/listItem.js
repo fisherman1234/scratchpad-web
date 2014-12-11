@@ -23,6 +23,8 @@ define([
 
       if (note.get("highlightLang") && note.get("highlightLang") !== "text"){
         hljs.highlightBlock($preview[0]);
+      } else {
+        $preview.addClass('hljs');
       }
 
       this.$(".timestamp").html(moment(note.get("updated_at")).format("lll"));
@@ -34,6 +36,8 @@ define([
     openNote: function(){
       if (this.note.id){
         Backbone.history.navigate('/notes/' + this.note.id, true)
+      } else {
+        this.remove();
       }
     }
 

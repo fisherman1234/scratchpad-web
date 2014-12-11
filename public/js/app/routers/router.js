@@ -20,7 +20,8 @@ define([
       routes: {
         "": "index",
         "loading": "loading",
-        "notes/:noteId": "noteId"
+        "notes/:noteId": "noteId",
+        "saved/:firebaseId": "loadFirebase"
       },
       loading: function(){
 
@@ -36,6 +37,9 @@ define([
       },
       noteId: function(noteId) {
         this.mainView().render({noteId: noteId})
+      },
+      loadFirebase: function(firebaseId){
+        this.mainView().render({firebaseId: firebaseId})
       }
 
     });

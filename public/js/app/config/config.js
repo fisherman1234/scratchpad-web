@@ -25,8 +25,10 @@ require.config({
     // Plugins
     // -------
     "ace": "../libs/ace/src-noconflict/ace",
+    "sjcl": "../libs/sjcl",
     "backbone.validateAll": "../libs/plugins/Backbone.validateAll",
     "bootstrap": "../libs/plugins/bootstrap",
+    "firebase": "../libs/firebase",
     "highlightjs": "../libs/highlightjs/highlight.pack",
     "lz-string": "../libs/lz-string",
     "localstorage": "../libs/plugins/Backbone.localStorage",

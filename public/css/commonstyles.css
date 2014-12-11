@@ -3,9 +3,10 @@ html, body, #scratchpad-app, #list, #editor{
 }
 
 #list {
-  background-color: red;
+  background-color: rgb(231, 231, 231);
   position: absolute;
   width: 25%;
+  border-right: 1px solid gray;
 }
 
 #editor{
@@ -17,7 +18,7 @@ html, body, #scratchpad-app, #list, #editor{
 #editor .toolbar{
   position: absolute;
   top: 0;
-  background-color: yellow;
+  background-color: white;
   width: 100%;
   height: 40px;
 }
@@ -81,12 +82,26 @@ html, body, #scratchpad-app, #list, #editor{
   height: 30px;
 }
 
-.toolbar .action-menu{
+.toolbar .action-menu, .toolbar .share-menu{
   display: inline-block;
+}
+
+.share-dropdown-menu {
+  width: 400px;
+}
+
+.share-dropdown-menu li {
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.share-dropdown-menu .create-gist{
+  cursor: pointer;
 }
 
 .toolbar .btn{
   border-radius: 5px;
+  z-index: 1; /* we don't want to be hidden by the timestamp */
 }
 
 .toolbar .right-group{
@@ -100,4 +115,18 @@ html, body, #scratchpad-app, #list, #editor{
   top: 10px;
   width: 100%;
   text-align: center;
+  cursor: default;
+}
+
+#editor .ace-xcode .ace_gutter {
+  background: white;
+}
+
+#editor .password-container{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 80%;
+  margin: auto;
 }

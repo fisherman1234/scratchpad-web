@@ -11,14 +11,34 @@
     <div class="dropdown action-menu">
       <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
               aria-expanded="true">
-        More
+        Actions
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Create gist</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" class="create-gist">Create gist</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" class="share">Share</a></li>
+      </ul>
+    </div>
+
+    <div class="dropdown share-menu">
+      <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+              aria-expanded="true">
+        Share
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right share-dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+        <li>
+          <input class="share-url"/>
+          <input class="share-password"/>
+          <span class="share-link">Generate share link</span>
+        </li>
+
+
+        <li>
+          <input class="gist-url"/>
+          <span class="create-gist">Generate gist</span>
+        </li>
+
       </ul>
     </div>
   </div>
