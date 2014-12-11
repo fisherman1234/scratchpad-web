@@ -62,7 +62,6 @@ define([
       this.aceEditor.getSession().setWrapLimitRange(100, 120);
       this.aceEditor.setOption('printMarginColumn', 121);
 
-
       return this;
     },
     events: {
@@ -70,7 +69,8 @@ define([
       'change .language-select': 'onLanguageSelectChanged',
       'click .create-gist': 'createGist',
       'click .share-link': 'shareNote',
-      'click .share-dropdown-menu li': 'doNotClose'
+      'click .share-dropdown-menu li': 'doNotClose',
+      'click .prettify-json': 'prettifyJson'
     },
     onLanguageSelectChanged: function(){
       var lang = this.$(".language-select").val();
@@ -156,6 +156,22 @@ define([
     doNotClose: function(e){
       e.preventDefault();
       e.stopPropagation();
+    },
+    prettifyJson: function(e){
+      var editor = this.aceEditor;
+      editor.getSession().setMode("ace/mode/json");
+      this.$(".language-select").val("json");
+      this.onLanguageSelectChanged();
+
+      var val = editor.session.getValue();
+
+      var o = JSON.parse(val);
+      if (typeof o === 'string'){
+        o = JSON.parse(o);
+      }
+      val = JSON.stringify(o, null, 4);
+      editor.session.setValue(val);
+
     }
 
   });

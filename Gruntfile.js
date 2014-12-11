@@ -21,35 +21,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     requirejs: {
-      mobileJS: {
-        options: {
-          baseUrl: 'public/js/app',
-          paths: {
-            'mobile': 'init/MobileInit'
-          },
-          wrap: true,
-          // name: "../libs/almond",
-          onModuleBundleComplete: amdcleanLogic,
-          preserveLicenseComments: false,
-          optimize: 'uglify',
-          optimizeCss: 'standard',
-          mainConfigFile: 'public/js/app/config/config.js',
-          include: ['mobile'],
-          out: 'public/js/app/init/MobileInit.min.js'
-        }
-      },
-      mobileCSS: {
-        options: {
-          optimizeCss: 'standard',
-          cssIn: './public/css/mobile.css',
-          out: './public/css/mobile.min.css'
-        }
-      },
       desktopJS: {
         options: {
           baseUrl: 'public/js/app',
           paths: {
-            'desktop': 'init/DesktopInit'
+            'desktop': 'init/init'
           },
           wrap: true,
           // name: "../libs/almond",
@@ -58,7 +34,7 @@ module.exports = function(grunt) {
           optimize: 'uglify',
           mainConfigFile: 'public/js/app/config/config.js',
           include: ['desktop'],
-          out: 'public/js/app/init/DesktopInit.min.js'
+          out: 'public/js/app/init/init.min.js'
         }
       },
       desktopCSS: {
@@ -96,17 +72,14 @@ module.exports = function(grunt) {
     grunt.task.run(['requirejs:desktopJS', 'requirejs:desktopCSS']);
   });
 
-  grunt.registerTask('mobileBuild', function() {
-    grunt.task.run(['requirejs:mobileJS', 'requirejs:mobileCSS']);
-  });
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-plato');
-   
+
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('minify', ['requirejs:desktopJS', 'requirejs:mobileJS']);
+  grunt.registerTask('minify', ['requirejs:desktopJS']);
   grunt.registerTask('complexity:report', 'plato');
-  grunt.registerTask('build', ['desktopBuild', 'mobileBuild']);
+  grunt.registerTask('build', ['desktopBuild']);
   grunt.registerTask('default', ['test', 'build', 'complexity:report']);
 };
