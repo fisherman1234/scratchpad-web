@@ -56,7 +56,7 @@ define([
     },
     randomPass: function () {
       var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()_+=-{}|[];:',./?><";
 
       var min = 20;
       var max = 40;
