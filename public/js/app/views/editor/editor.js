@@ -4,10 +4,11 @@ define([
   'moment',
   'highlightjs',
   'firebase',
+  'ace',
   'shared/views/base',
   'text!./editor.html'
 
-], function ($, _, moment, highlightjs, firebase , BaseView, editorTemplate) {
+], function ($, _, moment, highlightjs, firebase , mace, BaseView, editorTemplate) {
 
   return BaseView.extend({
     initialize: function (args) {
@@ -148,7 +149,7 @@ define([
       });
     },
     setShareUrl: function(){
-      var url = window.location.origin + "/#saved/" + this.model.get("fireBaseId");
+      var url = window.location.origin + "/saved/" + this.model.get("fireBaseId");
       this.$(".share-url").val(url);
       this.$(".share-password").val(this.model.get('fireBasePass'));
 

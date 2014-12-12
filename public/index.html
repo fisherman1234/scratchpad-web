@@ -11,7 +11,7 @@
        More info: h5bp.com/i/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>Backbone-Require Boilerplate</title>
+  <title>Scratchpad</title>
   <meta name="description" content="Backbone.js and Require.js Boilerplate Library">
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
@@ -26,7 +26,7 @@
         // App Environment
         // ---------------
         //  Tip: Set to true to turn on "production" mode
-        var production = false,
+        var production = true,
           filesToLoad,
           //BoilerplateMVC Helper Methods
           boilerplateMVC = {
@@ -66,25 +66,19 @@
             },
             loadFiles: function(production, obj, callback) {
               var self = this;
+              var matchingCss;
               if(production) {
                 // Loads the production CSS file(s)
-                self.loadCSS(obj["prod-css"], function() {
-                  // If there are production JavaScript files to load
-                  if(obj["prod-js"]) {
-                    // Loads the correct initialization file (which includes Almond.js)
-                    self.loadJS(obj["prod-js"], callback);
-                  }
-                });
+                matchingCss = obj["prod-css"]
               } else {
+                matchingCss = obj["dev-css"]
                 // Loads the development CSS file(s)
-                self.loadCSS(obj["dev-css"], function() {
-                  // If there are development Javascript files to load
-                  if(obj["dev-js"]) {
-                    // Loads Require.js and tells Require.js to find the correct intialization file
-                    self.loadJS(obj["dev-js"], callback);
-                  }
-                });
               }
+
+              self.loadCSS(matchingCss, function () {
+                // If there are production JavaScript files to load
+                self.loadJS({ "data-main": "/js/app/config/config.js", "src": "//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js" }, callback);
+              });
             }
           };
 
@@ -94,13 +88,13 @@
             // Mobile/Tablet CSS and JavaScript files to load
             filesToLoad = {
               // CSS file that is loaded when in development mode
-              "dev-css": "css/mobile.css",
+              "dev-css": "/css/mobile.css",
               // CSS file that is loaded when in production mode
-              "prod-css": "css/mobile.min.css",
+              "prod-css": "/css/mobile.min.css",
               // Require.js configuration file that is loaded when in development mode
-              "dev-js": { "data-main": "js/app/config/config.js", "src": "js/libs/require.js" },
+              "dev-js": { "data-main": "/js/app/config/config.js", "src": "/js/libs/require.js" },
               // JavaScript initialization file that is also loaded when in development mode
-              "dev-init": "js/app/init/init.js",
+              "dev-init": "js/app/init/init.min.js",
               // JavaScript file that is loaded when in production mode
               "prod-js": "js/app/init/init.min.js"
             };
@@ -113,22 +107,24 @@
             // Desktop CSS and JavaScript files to load
             filesToLoad = {
               // CSS file that is loaded when in development mode
-              "dev-css": "css/desktop.css",
+              "dev-css": "/css/desktop.css",
               // CSS file that is loaded when in production mode
-              "prod-css": "css/desktop.min.css",
-              // Require.js configuration file that is also loaded when in development mode
-              "dev-js": { "data-main": "js/app/config/config.js", "src": "js/libs/require.js" },
+              "prod-css": "/css/desktop.min.css",
               // JavaScript initialization file that is loaded when in development mode
-              "dev-init": "js/app/init/init.js",
+              "dev-init": "/js/app/init/init.js",
               // JavaScript file that is loaded when in production mode
-              "prod-js": "js/app/init/init.min.js"
+              "prod-init": "js/app/init/init.min.js"
             };
 
           }
 
           boilerplateMVC.loadFiles(production, filesToLoad, function() {
-            if(!production && window.require) {
-              require([filesToLoad["dev-init"]]);
+            if(window.require) {
+              if (production){
+                require([filesToLoad["prod-init"]]);
+              } else {
+                require([filesToLoad["dev-init"]]);
+              }
             }
           });
 

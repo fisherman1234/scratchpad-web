@@ -27,9 +27,7 @@ module.exports = function(grunt) {
           paths: {
             'desktop': 'init/init'
           },
-          wrap: true,
           // name: "../libs/almond",
-          onModuleBundleComplete: amdcleanLogic,
           preserveLicenseComments: false,
           optimize: 'uglify',
           mainConfigFile: 'public/js/app/config/config.js',

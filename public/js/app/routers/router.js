@@ -13,7 +13,7 @@ define([
       initialize: function () {
 
         // Tells Backbone to start watching for hashchange events
-        Backbone.history.start();
+        Backbone.history.start({pushState: true});
 
       },
 
