@@ -15,7 +15,7 @@ define([
 
       var self = this;
       this.note.once('change', function(){
-        self.render(note)
+        self.render(note);
       });
       this.$el.html(listItemTemplate);
       var $preview = this.$(".preview");
@@ -35,7 +35,7 @@ define([
     },
     openNote: function(){
       if (this.note.id){
-        Backbone.history.navigate('/notes/' + this.note.id, true)
+        Backbone.history.navigate('/notes/' + this.note.id, true);
       } else {
         this.remove();
       }

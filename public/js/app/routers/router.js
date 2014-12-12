@@ -36,10 +36,10 @@ define([
         this.mainView().render();
       },
       noteId: function(noteId) {
-        this.mainView().render({noteId: noteId})
+        this.mainView().render({noteId: noteId});
       },
       loadFirebase: function(firebaseId){
-        this.mainView().render({firebaseId: firebaseId})
+        this.mainView().render({firebaseId: firebaseId});
       }
 
     });

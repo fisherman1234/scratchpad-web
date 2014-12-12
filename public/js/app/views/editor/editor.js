@@ -99,8 +99,8 @@ define([
         if (detectedLang && aceLang) {
           console.log('detected lang', aceLang);
           this.aceEditor.getSession().setMode(aceLang);
-          savedData["aceLang"] = aceLang;
-          savedData["highlightLang"] = detectedLang;
+          savedData.aceLang = aceLang;
+          savedData.highlightLang = detectedLang;
           this.$(".language-select").val(detectedLang);
         }
       }

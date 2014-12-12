@@ -39,7 +39,7 @@ define([
         Backbone.history.navigate("/notes/" + self.model.id, true);
       }).fail(function(){
         $passField.removeAttr("disabled");
-      })
+      });
     }
   });
 

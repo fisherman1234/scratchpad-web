@@ -53,16 +53,6 @@ module.exports = function(grunt) {
           document: true
         }
       }
-    },
-    plato: {
-      your_task: {
-        options : {
-            exclude: /\.min\.js$/    // excludes source files finishing with ".min.js"
-        },
-        files: {
-            'public/reports': ['public/js/app/**/*.js']
-        }
-      }
     }
   });
 
@@ -73,11 +63,9 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-plato');
 
   grunt.registerTask('test', ['jshint']);
   grunt.registerTask('minify', ['requirejs:desktopJS']);
-  grunt.registerTask('complexity:report', 'plato');
   grunt.registerTask('build', ['desktopBuild']);
-  grunt.registerTask('default', ['test', 'build', 'complexity:report']);
+  grunt.registerTask('default', ['test', 'build']);
 };
